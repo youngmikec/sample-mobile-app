@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform} from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { Colors } from '../colors';
 
 export default function LoginScreen() {
     const [email, onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <KeyboardAvoidingView 
         style={styles.container}
@@ -12,23 +14,45 @@ export default function LoginScreen() {
     >
         <ScrollView keyboardDismissMode='on-drag'>
             <Text style={styles.headerText}>Welcome to Little Lemon</Text>
-            <Text style={styles.regularText}>Login to continue </Text>
 
-            <TextInput 
-                style={styles.inputField}
-                value={email}
-                onChangeText={onChangeEmail}
-                placeholder={'email'}
-                keyboardType='email-address'
-            />
-            <TextInput 
-                style={styles.inputField}
-                value={password}
-                onChangeText={onChangePassword}
-                placeholder={'password'}
-                keyboardType='default'
-                secureTextEntry={true}
-            />
+            {
+              !loggedIn && (
+              <View>
+                <Text style={styles.regularText}>Login to continue </Text>
+                <TextInput 
+                    style={styles.inputField}
+                    value={email}
+                    onChangeText={onChangeEmail}
+                    placeholder={'email'}
+                    keyboardType='email-address'
+                />
+                <TextInput 
+                    style={styles.inputField}
+                    value={password}
+                    onChangeText={onChangePassword}
+                    placeholder={'password'}
+                    keyboardType='default'
+                    secureTextEntry={true}
+                />
+
+                <View style={styles.buttonContainer}>
+                  <Pressable style={styles.button} onPress={() => setLoggedIn(!loggedIn)}>
+                    <Text style={styles.buttonText}>Log in</Text>
+                  </Pressable>
+                </View>
+
+              </View>
+              ) 
+            }
+
+            {
+              loggedIn && (
+                <View style={styles.buttonContainer}>
+                  <Text style={styles.regularText}>You are logged In</Text>
+                </View>
+              )
+            }
+
         </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -58,5 +82,27 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 20,
     color: Colors.black
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    padding: 5,
+    width: 150,
+    borderRadius: 20,
+    marginHorizontal: 20,
+    margineVertical: 20,
+    backgroundColor: Colors.primary,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: Colors.secondary,
   }
+  
 });
