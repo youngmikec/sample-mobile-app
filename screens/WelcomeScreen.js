@@ -8,6 +8,7 @@ export default function WelcomeScreen () {
     const colorTheme = useColorScheme();
     
     useEffect(() => {
+        console.log('colorTheme', colorTheme)
         setColorScheme(colorTheme)
     }, [colorTheme]);
 
@@ -70,7 +71,8 @@ export default function WelcomeScreen () {
 const styles = StyleSheet.create({
     container: {
         padding: 40,
-        flex: 1
+        flex: 1,
+        backgroundColor: Colors.secondary
     },
     headerText: { 
         fontSize: 30, 
